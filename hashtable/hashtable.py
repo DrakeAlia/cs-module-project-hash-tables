@@ -8,6 +8,45 @@ class HashTableEntry:
         self.next = None
 
 
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    # use this to find the node in the hash table
+    def find(self, key):
+        cur = self.head
+
+        while cur is not None:
+            if cur.key == key:
+                return cur.value
+            cur = cur.next
+        return None
+
+    def insert_at_head(self, key, value):
+        n = HashTableEntry(key, value)
+        n.next = self.head
+        self.head = n
+
+    def delete_node(self, key):
+        cur = self.head
+        if cur.key == key:
+            self.head = self.head.next
+            cur.next = None
+            return cur
+    # general cases
+        prev = cur
+        cur = None
+
+        while cur is not None:
+            if cur.key == key:
+                prev.next = cur.next
+                cur.next = None
+                return cur
+            else:
+                prev = prev.next
+                cur = cur.next
+        return None
+
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
