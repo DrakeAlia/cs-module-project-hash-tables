@@ -61,6 +61,11 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
+        self.capacity = [None] * capacity
+        self.count = 0
+        self.storage = [LinkedList()] * capacity
+
+        self.capacity = [None] * MIN_CAPACITY
 
 
     def get_num_slots(self):
@@ -74,7 +79,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        return len(self.capacity)
 
     def get_load_factor(self):
         """
@@ -83,7 +88,9 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        total_items = self.count
+        cap = self.get_num_slots()
+        return total_items / cap
 
     def fnv1(self, key):
         """
@@ -102,15 +109,18 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
-
+        hash = 5381
+        for x in key:
+            hash = ((hash << 5) + hash) + ord(x)
+        return hash & 0xFFFFFFFF
 
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        # return self.fnv1(key) % self.capacity
+        return self.djb2(key) % len(self.capacity)
 
     def put(self, key, value):
         """
@@ -121,7 +131,38 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # Find the index in the hash table for the key
+        # Search the list at that index for the key
+        # If it exists:
+        # Overwrite the value
+        # Else it doesn't exist:
+        # Make a new record (`HashTableEntry` class) with the key and value
+        # Insert it anywhere in the lis
+        self.count += 1
 
+        # checking to see if the key exsists
+        if self.capacity[self.hash_index(key)] is not None:
+            # since it does we want to
+            # overwrite value
+            overwrite = self.capacity[self.hash_index(key)].find(key)
+            # checking to make sure this exsist in the linked list
+            if overwrite is not None:
+
+                cur = self.capacity[self.hash_index(key)].head
+                while cur is not None:
+                    if cur.key == key:
+                        cur.value = value
+                    cur = cur.next
+            else:
+                self.capacity[self.hash_index(key)].insert_at_head(key, value)
+        else:
+            linked = LinkedList()
+            linked.insert_at_head(key, value)
+            self.capacity[self.hash_index(key)] = linked
+
+        load = self.get_load_factor()
+        if load > 0.7:
+            self.resize(len(self.capacity) * 2)
 
     def delete(self, key):
         """
@@ -132,7 +173,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        if self.capacity[self.hash_index(key)] is not None:
+            self.count -= 1
+            deletedNode = self.capacity[self.hash_index(key)].delete_node(key)
+            return deletedNode
+        else:
+            return None
 
     def get(self, key):
         """
@@ -143,7 +189,10 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        if self.capacity[self.hash_index(key)] is not None:
+            return self.capacity[self.hash_index(key)].find(key)
+        else:
+            return None
 
     def resize(self, new_capacity):
         """
@@ -153,7 +202,22 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # if the load size > .7 -> resize the hash table
+        # make a new array with double the capacity of the old one
+        # have a hash table refer to the new array
+        # run through all the nodes of the old hash table array
+        # put them in the new hash table
+        old_hash = self.capacity
+        self.capacity = [None] * new_capacity
+        self.count = 0
 
+        for x in old_hash:
+            if x is not None:
+                cur = x.head
+
+                while cur is not None:
+                    self.put(cur.key, cur.value)
+                    cur = cur.next
 
 
 if __name__ == "__main__":
