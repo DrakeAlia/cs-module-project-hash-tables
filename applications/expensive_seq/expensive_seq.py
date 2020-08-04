@@ -1,9 +1,25 @@
 # Your code here
+import math
+import random 
 
+cache = {}
 
 def expensive_seq(x, y, z):
     # Your code here
 
+    if (x, y, z) in cache:
+        return cache[(x, y, z)]
+    # else if x is less than 0 return x + y
+    elif x <= 0:
+        cache[(x, y, z)] = y + z 
+        return y + z
+    else:
+        result = (
+            expensive_seq(x - 1, y + 1, z) + expensive_seq(x -2, y + 2, z * 2) + expensive_seq(x - 3, y + 3, z * 3)
+        )
+
+    cache[(x, y, z)] = result
+    return cache[(x, y, z)]
 
 
 if __name__ == "__main__":
