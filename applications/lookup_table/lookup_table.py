@@ -20,27 +20,13 @@ def slowfun(x, y):
     """
     # Your code here
     
+    # We can use cacheing to avoid doing repeated calculations 
+    # We will fill the lookuptable with results and return them when they are called
     if (x, y) not in lookuptable:
         lookuptable[(x,y)] = slowfun_too_slow(x, y)
 
     return lookuptable[(x,y)]
 
-
-
-
-# Do it the same way as expensive sequence to optimize
-# def slowfun_inner(x, y):
-#     v = math.pow(x, y)
-#     if v not in cache:
-#         cache[v] = math.factorial(v)
-#         cache[v] = math.pow(x, y)
-#         cache[v] //= x + y
-#         cache[v] %= 982451653
-#         v = cache[v]
-
-#         return v
-
-#     return slowfun_inner(x, y)
 
 
 # Do not modify below this line!

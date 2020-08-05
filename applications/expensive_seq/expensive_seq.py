@@ -2,24 +2,20 @@
 import math
 import random 
 
-cache = {}
+table = {}
 
 def expensive_seq(x, y, z):
     # Your code here
 
-    if (x, y, z) in cache:
-        return cache[(x, y, z)]
-    # else if x is less than 0 return x + y
-    elif x <= 0:
-        cache[(x, y, z)] = y + z 
-        return y + z
-    else:
-        result = (
-            expensive_seq(x - 1, y + 1, z) + expensive_seq(x -2, y + 2, z * 2) + expensive_seq(x - 3, y + 3, z * 3)
-        )
+# We can use caching to help with the crazy recursions
+# Much like the fibonacci example we'll cache results to save time on repetitions
+    if x <= 0:
+        return y +z
 
-    cache[(x, y, z)] = result
-    return cache[(x, y, z)]
+    if (x, y, z) not in table:
+        table[(x, y, z)] = expensive_seq(x-1, y+1, z) + expensive_seq(x-2, y+2, z*2) + expensive_seq(x-3, y+3, z*3)
+
+    return table[(x, y, z)]
 
 
 if __name__ == "__main__":
