@@ -1,8 +1,7 @@
 # Your code here
 import random
 import math 
-
-lookuptable = {}
+lookup_table = {}
 
 def slowfun_too_slow(x, y):
     v = math.pow(x, y)
@@ -22,10 +21,16 @@ def slowfun(x, y):
     
     # We can use cacheing to avoid doing repeated calculations 
     # We will fill the lookuptable with results and return them when they are called
-    if (x, y) not in lookuptable:
-        lookuptable[(x,y)] = slowfun_too_slow(x, y)
+    # If x & y are not in the lookup table then run the old code
+    if (x, y) not in lookup_table:
+        v = math.pow(x, y)
+        v = math.factorial(v)
+        v //= (x + y)
+        v %= 982451653
+        # Set lookup table with the variables to v
+        lookup_table[(x, y)] = v
 
-    return lookuptable[(x,y)]
+    return lookup_table[(x, y)]
 
 
 

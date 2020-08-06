@@ -1,14 +1,19 @@
+from collections import Counter
+
 def no_dups(s):
     # Your code here
-    word = s.split(" ")
-    word_dict = dict()
-    no_duplicates = [] 
 
-    for i in word:
-        if i not in word_dict:
-            word_dict[i] = 1
-            no_duplicates.append(i)
-    return " ".join(no_duplicates)
+    # split the string
+    string = s.split(" ")
+
+    for i in range(0, len(string)):
+        # for string[i] - join string
+        string[i] = "".join(string[i])
+        # add to counter if duplicate exists
+        dups = Counter(string)
+        # strips the duplicate from the string and rejoins the string
+        new_string = " ".join(dups.keys())
+        return new_string
 
 if __name__ == "__main__":
     print(no_dups(""))

@@ -1,82 +1,56 @@
+import re
+
+def word_count(s):
+    # Your code here
+
 # Case should be ignored. Output keys must be lowercase.
 # Key order in the dictionary doesn't matter.
 # Split the strings into words on any whitespace.
 # Ignore each of the following characters:
 
-def word_count(s):
-    # Your code here
+    # Set the dictonary
+    word_dict = {}
+    # Convert to lower, strip the special chars and split the list
+    lower_case = s.lower()
+    new_list = re.sub('["\\:\\;\\,\\.\\-\\+\\=\\/\\\\|\\[\\]\\{\\}\\(\\)\\*\\^\\&]', '', lower_case)
+    words = new_list.split()
 
-    # count_dict = {}
-    # words = ""
-    # punct_ignore = '":;,.-+=/\|[]{}()*^&'
-    # punct_count = 0
+    for word in words:
+        # If the word is empty then move along
+        if word == "":continue
 
-    # for char in s:
-    #     if char in punct_ignore:
-    #         punct_count +=1
+        # If the word is already in the word dict, add one     
+        if word in word_dict:
+            word_dict[word] += 1
+        # If not, add it
+        else: 
+            word_dict[word] = 1
 
-    #     if char not in punct_ignore:
-    #         words = words + char
+    return word_dict
 
-    # if punct_count == 0:
-    #     return count_dict
+    # Other method:
+    # def word_count(input_string):
 
-    # else:
-    #     words = words.split()
-    #     words = [word.lower() for word in words]
+    # # Let's first remove the special characters
+    # # Then we need to convert the string to all lowercase
+    # # Next we should split on whitespace making a list
+    # # Finally input that list into a dictionary to count the occurances of each word
 
-    #     for word in words:
-    #         if word in count_dict:
-    #             count_dict[word] +=1
+    # special_characters = ['\"', ':', ';', ',', '.', '-', '+', '=', '/', '\\', '|', '[', ']', '{', '}', '(', ')', '*', '^', '&']
+    # filtered_string = ''.join(filter(lambda c: c not in special_characters, input_string))
+    # lower_string = filtered_string.lower()
+    # word_array = lower_string.split()
 
-    #         else:
-    #             count_dict[word] = 1
+    # word_counts = {}
 
-    #     return count_dict
+    # for word in word_array:
+    #     if word not in word_counts:
+    #         word_counts[word] = 0
 
+    #     word_counts[word] += 1
 
-    # cache = {}
-
-    # words_lowercased = s.lower()
-
-    # ignored_chars = '" : ; , . - + = / \ | [ ] { } ( ) * ^ &'.split(" ")
-
-    # for chars in ignored_chars:
-
-    #     words_lowercased = words_lowercased.replace(chars, "")
-    # for words in words_lowercased.split():
-    #     print(words)
-
-    #     if words == "":
-    #         continue
-    #     if words not in cache:
-    #         cache[words] = 1
-    #     else:
-    #         cache[words] += 1
-    # return cache
-
-
-    char_exclude = r'" : ; , . - + = / \ | [ ] { } ( ) * ^ &'
-    words = s.lower()
-    name = s.translate({ord(c): " " for c in char_exclude})
-    if name == "":
-        return {}
-    seperate = name.lower().split()
-    words = {i: seperate.count(i) for i in seperate}
-    return words
+    # return word_counts
  
-
-    # cache = {}
-    # s = s.lower()
-    # for i in s:
-    #     if i >= 'a' and i <='z':
-    #         if i not in cache:
-    #             cache[i] = 1
-    #         else:
-    #             cache[i] += 1
-    # for i in cache:
-    #     print(f'Letter: {i[0]}, Count: {cache[i]}')
-   
             
 
 if __name__ == "__main__":

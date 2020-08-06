@@ -7,7 +7,7 @@ table = {}
 def expensive_seq(x, y, z):
     # Your code here
 
-# We can use caching to help with the crazy recursions
+# We can use caching to help with the recursions
 # Much like the fibonacci example we'll cache results to save time on repetitions
     if x <= 0:
         return y +z
