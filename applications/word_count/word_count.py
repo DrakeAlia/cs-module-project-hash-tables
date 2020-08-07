@@ -27,29 +27,6 @@ def word_count(s):
             word_dict[word] = 1
 
     return word_dict
-
-    # Other method:
-    # def word_count(input_string):
-
-    # # Let's first remove the special characters
-    # # Then we need to convert the string to all lowercase
-    # # Next we should split on whitespace making a list
-    # # Finally input that list into a dictionary to count the occurances of each word
-
-    # special_characters = ['\"', ':', ';', ',', '.', '-', '+', '=', '/', '\\', '|', '[', ']', '{', '}', '(', ')', '*', '^', '&']
-    # filtered_string = ''.join(filter(lambda c: c not in special_characters, input_string))
-    # lower_string = filtered_string.lower()
-    # word_array = lower_string.split()
-
-    # word_counts = {}
-
-    # for word in word_array:
-    #     if word not in word_counts:
-    #         word_counts[word] = 0
-
-    #     word_counts[word] += 1
-
-    # return word_counts
  
             
 

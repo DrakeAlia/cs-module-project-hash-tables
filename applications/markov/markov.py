@@ -16,7 +16,7 @@ for i in range (len(split_words)):
     if split_words[i] not in word_dict:
         word_dict[split_words[i]] = []
 
-# append the split words into the dict
+# Append the split words into the dict
     try:
         word_dict[split_words[i]].append(split_words[i + 1])
     except IndexError:

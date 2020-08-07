@@ -1,30 +1,55 @@
-import re
 # Your code here
+from collections import defaultdict
 
-# Import the text
-with open("robin.txt") as f:
-    words = f.read()
+def word_count(s):
 
-# Convert to lower, strip the special chars and split the list   
-lower_case = words.lower()
-new_list = re.sub('["\\:\\;\\,\\.\\-\\+\\=\\/\\\\|\\[\\]\\{\\}\\(\\)\\*\\^\\&]', '', lower_case)
-new_words = new_list.split()
 
-# Set the histogram dict
-histogram = {}
+    s = s.lower()
+    ignore = [
+        '"',
+        ":",
+        ";",
+        ",",
+        ".",
+        "-",
+        "+",
+        "=",
+        "/",
+        "\\",
+        "|",
+        "[",
+        "]",
+        "{",
+        "}",
+        "(",
+        ")",
+        "*",
+        "^",
+        "&",
+    ]
 
-for word in new_words:
-    # If word is not in histogram, add it
-    if words not in histogram:
-        histogram[word] = "#"
-    # If it is, add one
-    else:
-        histogram[word] += "#"
+    for char in ignore:
+        s = s.replace(char, "")
+    counts = {}
+    split = s.split()
+    for word in split:
+        if word in counts.keys():
+            counts[word] += 1
+        else:
+            counts[word] = 1
+    return counts
 
-# List the items in histogram dict
-word_occurrence = list(histogram.items())
-# Using the lambda expression, sort by key and list it in reverse
-word_occurrence.sort(key=lambda x: x[1], reverse=True)
 
-for (key, value) in word_occurrence:
-    print(f'{key} : {value}') 
+with open("robin.txt") as file:
+    s = file.read()
+
+counts = word_count(s)
+width = max([len(word) for word in counts.keys()]) + 2
+
+counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
+
+print(counts)
+
+
+for count in counts:
+    print(f"{count[0].ljust(width)}" + "#" * count[1])
