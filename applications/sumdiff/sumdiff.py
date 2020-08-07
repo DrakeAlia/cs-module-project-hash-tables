@@ -13,3 +13,18 @@ def f(x):
 
 # Your code here
 
+# Set addition and subtraction dicts
+addition = {}
+subtraction = {}
+
+for i in range(0, len(q)):
+    for j in range(0, len(q)):
+        addition[f'f({q[i]}) + f({q[j]})'] = f(q[i]) + f(q[j])
+        # print('add',f(q[i]) + f(q[j]))
+        # print('subtract',f(q[i]) - f(q[j]))
+        subtraction[f'f({q[j]}) - f({q[i]})'] = f(q[j]) - f(q[i])
+
+for add in addition:
+    for sub in subtraction:
+        if subtraction[sub] == addition[add]:
+            print(f'{add} = {sub} = {addition[add]}')
